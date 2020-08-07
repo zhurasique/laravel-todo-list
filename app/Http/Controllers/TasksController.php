@@ -114,6 +114,12 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+
+        $task->delete();
+
+        Session::flash('success', "Task Deleted Successfully");
+
+        return redirect()->route('task.index');
     }
 }

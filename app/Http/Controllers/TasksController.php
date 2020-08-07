@@ -15,7 +15,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = Task::paginate(5);
+        $tasks = Task::orderBy('due_date', 'asc')->paginate(5);
         return view('tasks.index')->with('tasks', $tasks);
     }
 
@@ -52,7 +52,7 @@ class TasksController extends Controller
 
         Session::flash('success', 'Created Task Successfully');
 
-        return redirect()->route('task.create');
+        return redirect()->route('task.index');
     }
 
     /**
@@ -74,7 +74,9 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        $task->dueDateFormatting = false;
+        return view('tasks.edit')->withTask($task);
     }
 
     /**
@@ -86,7 +88,22 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:255|min:3',
+            'description' => 'required|string|max:10000|min:10',
+            'due_date' => 'required|date',
+        ]);
+
+        $task = Task::find($id);
+        $task->name = $request->name;
+        $task->description = $request->description;
+        $task->due_date = $request->due_date;
+
+        $task->save();
+
+        Session::flash('success', 'Edited Task Successfully');
+
+        return redirect()->route('task.index');
     }
 
     /**

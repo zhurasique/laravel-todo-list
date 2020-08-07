@@ -8,9 +8,11 @@
         <div class="col-sm-12">
             <h1>Create Task</h1>
 
-            @component('components.taskForm')
+            {!! Form::open(['route' => 'task.store', 'method' => 'POST']) !!}
+                @component('components.taskForm')
 
-            @endcomponent
+                @endcomponent
+            {!! Form::close() !!}
         </div>
     </div>
 

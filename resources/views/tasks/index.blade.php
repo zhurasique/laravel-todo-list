@@ -25,6 +25,7 @@
                     {!! Form::open(['route' => ['task.destroy', $task->id], 'method' => 'DELETE']) !!}
                         <a href="{{ route('task.edit', $task->id) }}" class="btn btn-sm btn-primary">Edit</a>
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        <a href="{{ route('task.show', $task->id) }}"  class="btn btn-sm btn-light">Show</a>
                     {!! Form::close() !!}
                 </div>
             </div>
